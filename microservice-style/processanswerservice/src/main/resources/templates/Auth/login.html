@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Login - SIFOST</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+</head>
+<body style="background-color: #1b1d24">
+<div style="margin-top: 10%;">
+    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;">
+        <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+        <div class="card d-flex justify-content-around" style="background-color: #217dbb">
+            <h1 class="justify-content-around d-flex" style="border-radius: 25px; background: white; margin: 15px; font-family: 'Fira sans', sans-serif; font-weight: bold">SIFOST</h1>
+            <div class="card-body " style="padding: 10%;">
+                <input class="form-control form-control-lg" type="text" placeholder="username"
+                       aria-label=".form-control-lg example" name="username" required style="margin-bottom: 10px;">
+                <input id="password" class="form-control form-control-lg" type="password" placeholder="password"
+                       aria-label=".form-control-lg example" name="password" onchange="check()" required>
+
+                <div style="height: 20px;"></div>
+                <div class="justify-content-around d-flex" style="margin-bottom: 10px;">
+                    <button type="submit" id="submit" class="btn btn-dark">Login</button>
+                </div>
+                <div class="justify-content-around d-flex">
+                    <a th:href="@{/register}" style="color: black; text-decoration: none; background: red; border-radius: 10px; padding: 10px">Register</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

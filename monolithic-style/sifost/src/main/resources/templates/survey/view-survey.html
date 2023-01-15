@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Create Survey</title>
+  <link rel="stylesheet" href="" th:href="@{/css/success.css}"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body style="background-color: #217DBB;">
+<nav>
+  <div class="container">
+    <h1>SIFOST</h1>
+    <div class="menu">
+      <a href="/survey/create" style="text-decoration: none; color: black;">Back</a>
+    </div>
+  </div>
+
+</nav>
+<center><p style="background:wheat; font-size:40px" th:text="${survey.getTitle()}" ></p></center>
+<form id="surveyForm" action="/create" method="post">
+  <!--  Loop multiple choice question-->
+  <div class="form-group" th:each="multipleChoiceQuestion : ${survey.getMultipleChoiceQuestions()}">
+    <label for="multipleChoice" class="question" th:text="${multipleChoiceQuestion.getPrompt()}"></label>
+    <div id="multipleChoice">
+      <!-- Default checkbox -->
+      <div class="form-check" th:each="choices : ${multipleChoiceQuestion.getChoices()}">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+        <label class="form-check-label" for="flexCheckDefault" th:text="${choices}"></label>
+      </div>
+    </div>
+  </div>
+
+  <!--  Loop simple question-->
+  <div class="form-group" th:if="${survey.getSimpleQuestions().size() != 0}" th:each="simpleQuestion : ${survey.getSimpleQuestions()}">
+    <label for="inputSimple" class="question" th:text="${simpleQuestion.getPrompt()}"></label>
+    <input type="text" class="form-control" id="inputSimple" placeholder="Mohon isi field ini">
+  </div>
+
+  <!--  Loop scale question-->
+  <div class="form-group" th:if="${survey.getScaleQuestions().size() != 0}" th:each="scaleQuestion : ${survey.getScaleQuestions()}">
+    <label for="scale" class="question" th:text="${scaleQuestion.getPrompt()}"></label>
+    <div id="scale">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+        <label class="form-check-label" for="inlineRadio1">1</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+        <label class="form-check-label" for="inlineRadio2">2</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option1">
+        <label class="form-check-label" for="inlineRadio3">3</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
+        <label class="form-check-label" for="inlineRadio4">4</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option1">
+        <label class="form-check-label" for="inlineRadio5">5</label>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <center><button type="submit" id="submit-button" class="btn btn-outline-success">Submit</button></center>
+</form>
+
+</body>
+</html>

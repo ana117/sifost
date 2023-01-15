@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Survey</title>
+    <link rel="stylesheet" href="" th:href="@{/css/success.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #217DBB;">
+<nav>
+    <div class="container">
+        <h1>SIFOST</h1>
+        <div class="menu">
+            <a href="/survey/create" style="text-decoration: none; color: black;">Back</a>
+        </div>
+    </div>
+
+</nav>
+<center><p style="background:wheat; font-size:40px" th:text="${survey.getTitle()}" ></p></center>
+<form id="surveyForm" th:action="@{/survey/process}" method="post" th:object = "${answerDTO}" >
+    <input type = "hidden" name = "surveyId" th:value = "${survey.getSurveyId()}">
+    <!--  Loop multiple choice question-->
+    <div class="form-group" th:each="multipleChoiceQuestion,status1 : ${survey.getMultipleChoiceQuestions()}">
+        <label for="multipleChoice" class="question" th:text="${multipleChoiceQuestion.getPrompt()}"></label>
+        <div id="multipleChoice">
+            <!-- Default checkbox -->
+            <div class="form-check" th:each="choices,status2 : ${multipleChoiceQuestion.getChoices()}">
+                <input class="form-check-input" type="checkbox" name = "answer" th:value="${status1.index}+'#'+${status2.index}" id="Multiple" />
+                <label class="form-check-label" for="Multiple" th:text="${choices}"></label>
+            </div>
+        </div>
+    </div>
+    <input type = "hidden" name = "answer" value = "&&&&&">
+    <!--  Loop simple question-->
+    <div class="form-group" th:if="${survey.getSimpleQuestions().size() != 0}" th:each="simpleQuestion,status : ${survey.getSimpleQuestions()}">
+        <label th:for="simpleQuestion" class="question" th:text="${simpleQuestion.getPrompt()}"></label>
+        <input type="text" class="form-control" id = "simpleQuestion" th:name = "answer"  required  placeholder="Mohon isi field ini">
+    </div>
+
+    <!--  Loop scale question-->
+    <input type = "hidden" name = "answer" value = "&&&&&">
+    <div class="form-group" th:if="${survey.getScaleQuestions().size() != 0}" th:each="scaleQuestion,status : ${survey.getScaleQuestions()}">
+        <label for="scale" class="question" th:text="${scaleQuestion.getPrompt()}"></label>
+        <div id="scale">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" required th:field="*{answers[__${status.index}__]}" id="inlineRadio1" value ="1">
+                <label class="form-check-label" for="inlineRadio1">1</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" th:field="*{answers[__${status.index}__]}" id="inlineRadio2" value ="2">
+                <label class="form-check-label" for="inlineRadio2">2</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" th:field="*{answers[__${status.index}__]}" id="inlineRadio3" value="3">
+                <label class="form-check-label" for="inlineRadio3">3</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" th:field="*{answers[__${status.index}__]}" id="inlineRadio4" value="4">
+                <label class="form-check-label" for="inlineRadio4">4</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id = "inlineRadio5" th:field="*{answers[__${status.index}__]}" value="5">
+                <label class="form-check-label" for="inlineRadio5">5</label>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <center><button type="submit" id="submit-button" class="btn btn-outline-success">Submit</button></center>
+</form>
+
+
+</body>
+</html>

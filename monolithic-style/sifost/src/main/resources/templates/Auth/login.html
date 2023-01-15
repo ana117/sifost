@@ -1,0 +1,26 @@
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Login - SIFOST</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;">
+        <div th:if="${param.error}">
+            <p class = "text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+        <p>
+        username: <input type="text" name="username" required />
+        </p>
+        <p>
+            Password: <input type="password" name="password" id="password" onchange ='check()' required />
+        </p>
+        <div>
+            <button type="submit" id="submit" class="btn btn-primary">login</button>
+        </div>
+    </form>
+    <h3><a th:href="@{/register}">Register</a></h3>
+</div>
+
+</body>
+</html>

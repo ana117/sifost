@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta id="csrf_token" sec:authorize="isFullyAuthenticated()" th:name="_csrf" th:content="${_csrf.token}"/>
+
+    <title>Create Survey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+</head>
+<body style="background-color: #1b1d24;">
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/profile}">SIFOST</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" th:href="@{/profile}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Survey
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/survey/create}">Create</a></li>
+                        <li><a class="dropdown-item" th:href="@{/survey/my-survey}">My Survey</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="d-flex" role="search">
+                <form th:action="@{/logout}" method="post">
+                    <input class="btn btn-primary" type="submit" value="Sign Out"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container text-center" style="margin-top: 3%">
+    <h2 style="color: white">Create a Survey</h2>
+
+    <div class="d-flex justify-content-around" style="margin-top: 5%;">
+
+        <div class="card" style="background-color: #217DBB; width: 50%;">
+            <div class="card-body text-center">
+                <form id="surveyForm" method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Survey Title</span>
+                        <input id="title-input" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <p style="font-weight: bold">Pick your survey Interest/Category</p>
+
+
+                    <div class="form-check form-check-inline" th:each="interest : ${listInterest}">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" th:value="${interest.getName()}">
+                        <label class="form-check-label" for="inlineRadio1"  th:text="${interest.getName()}"></label>
+                    </div>
+                    <pre>  </pre>
+
+                    <div id="questions"></div>
+
+                    <div style="margin-top: 20px;">
+                        <button id="add-question" type="button" class="btn btn-outline-dark" style="margin-right: 2%;">Add
+                            Question
+                        </button>
+                        <button type="submit" id="submit-button" class="btn btn-outline-dark"
+                                style="outline-color: #1b1d24">Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <input th:value="${#authentication.getPrincipal().getUser().getId()}" id="owner-id" hidden>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/create-survey.js}"></script>
+
+</body>
+</html>

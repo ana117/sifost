@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: large;
+}
+
+.btn-check {
+    margin: 50px;
+}

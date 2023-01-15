@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira sans', sans-serif;
+}
+nav {
+    background-color: white;
+    padding: 16px 32px;
+    border-bottom: 3px solid black;
+}
+
+.menu {
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 99px;
+    background-color: #23B0DD;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link-container{
+    padding: 16px 64px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.success-text{
+    padding: 8px 16px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: greenyellow;
+}
+
+form {
+    background-color: white;
+    margin: 30px;
+    border-radius: 25px;
+    padding: 16px 32px;
+}
+
+.question{
+    background-color: #217DBB;
+    margin: 10px;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: white;
+}
